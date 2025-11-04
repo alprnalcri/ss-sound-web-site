@@ -52,7 +52,7 @@ const AdminContactMessagesPage = () => {
     if (!window.confirm('Bu mesajı silmek istediğinizden emin misiniz?')) return;
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.delete(`http://localhost:5001/api/contact/${id}`, config);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/contact/${id}`, config);
       setMessages(messages.filter(msg => msg._id !== id));
       setSelectedMessage(null);
       setIsModalOpen(false);

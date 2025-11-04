@@ -29,7 +29,7 @@ const ContactForm = () => {
     setStatus('');
 
     try {
-      const res = await axios.post('http://localhost:5001/api/contact', formData);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/contact`, formData);
       if (res.data.success) {
         setStatus('Mesajınız başarıyla gönderildi!');
         setFormData({ name: '', email: '', phone: '', message: '' });
