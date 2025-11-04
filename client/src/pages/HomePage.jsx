@@ -22,7 +22,7 @@ const HomePage = () => {
 
   // ✅ API URL sabitini al — yoksa yedek olarak Render URL'sini kullan
   const API_URL = process.env.REACT_APP_API_URL || "https://ss-sound-web-site.onrender.com/api";
-  const BASE_URL = API_URL.replace("/api", ""); // görseller için base url
+
 
   useEffect(() => {
     const fetchRecentEvents = async () => {
@@ -91,10 +91,10 @@ const HomePage = () => {
                     {event.imageUrls && event.imageUrls.length > 0 ? (
                       <div className="w-full h-40 rounded-t-lg overflow-hidden">
                         {event.imageUrls.length > 1 ? (
-                          <EventCardCarousel imageUrls={event.imageUrls.map(url => `${BASE_URL}${url}`)} />
+                          <EventCardCarousel imageUrls={event.imageUrls.map(url => `${process.env.REACT_APP_STATIC_ASSET_URL}${url}`)} />
                         ) : (
                           <img
-                            src={`${BASE_URL}${event.imageUrls[0]}`}
+                            src={`${process.env.REACT_APP_STATIC_ASSET_URL}${event.imageUrls[0]}`}
                             alt={event.name}
                             className="w-full h-40 object-cover bg-card-light dark:bg-card-dark rounded-t-lg"
                           />

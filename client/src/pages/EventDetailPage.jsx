@@ -14,7 +14,7 @@ const LocationIcon = () => (
 );
 
 const CategoryIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 inline-block text-primary-light dark:text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 inline-block text-primary-light dark:text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
 );
 
 const EventDetailPage = () => {
@@ -44,7 +44,7 @@ const EventDetailPage = () => {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: { staggerChildren: 0.2 }
     }
@@ -57,32 +57,33 @@ const EventDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-      <motion.div 
+      <motion.div
         className="max-w-5xl mx-auto bg-card-light dark:bg-card-dark rounded-2xl shadow-2xl dark:border dark:border-gray-700 overflow-hidden lg:grid lg:grid-cols-2 lg:gap-4"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
         <motion.div variants={itemVariants} className="relative">
-        { (event.imageUrls && event.imageUrls.length > 1) ? (
-                  <div className="w-full h-64 lg:h-full">
-                    <EventCardCarousel imageUrls={event.imageUrls} />
-                  </div>
-                ) : (
-                  <img
-                    src={(event.imageUrls && event.imageUrls.length > 0) ? `${process.env.REACT_APP_API_URL.replace('/api', '')}${event.imageUrls[0]}` : 'https://via.placeholder.com/800x600'}
-                    alt={event.name}
-                    className="w-full h-64 lg:h-full object-cover bg-card-light dark:bg-card-dark"
-                  />
-                )}
-           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          {(event.imageUrls && event.imageUrls.length > 1) ? (
+            <div className="w-full h-64 lg:h-full">
+              <EventCardCarousel imageUrls={event.imageUrls} />
+            </div>
+          ) : (
+            <img
+              src={(event.imageUrls && event.imageUrls.length > 0) ? `${process.env.REACT_APP_STATIC_ASSET_URL}
+     ${event.imageUrls[0]}` : 'https://via.placeholder.com/800x600'}
+              alt={event.name}
+              className="w-full h-64 lg:h-full object-cover bg-card-light dark:bg-card-dark"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         </motion.div>
 
         <motion.div variants={itemVariants} className="p-8 flex flex-col justify-center">
           <motion.h1 variants={itemVariants} className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight text-gradient-animated">{event.name}</motion.h1>
-          
+
           <motion.div variants={itemVariants} className="space-y-4 text-lg text-text-light/80 dark:text-text-dark/80 mb-6">
-            <p className="flex items-center"><CalendarIcon /> 
+            <p className="flex items-center"><CalendarIcon />
               {new Date(event.date).toLocaleDateString('tr-TR', {
                 year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
               })}

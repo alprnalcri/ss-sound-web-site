@@ -70,9 +70,8 @@ const EventsPage = () => {
                 className="block h-full"
               >
                 <div
-                  className={`bg-card-light dark:bg-card-dark rounded-lg shadow-lg dark:border dark:border-gray-700 h-full flex flex-col transform hover:-translate-y-2 transition-all duration-500 ease-in-out ${
-                    inView ? 'animate-fade-in-up' : 'opacity-0'
-                  }`}
+                  className={`bg-card-light dark:bg-card-dark rounded-lg shadow-lg dark:border dark:border-gray-700 h-full flex flex-col transform hover:-translate-y-2 transition-all duration-500 ease-in-out ${inView ? 'animate-fade-in-up' : 'opacity-0'
+                    }`}
                   style={{ animationDelay: `${index * 150}ms` }}
                 >
                   {event.imageUrls?.length > 1 ? (
@@ -81,11 +80,8 @@ const EventsPage = () => {
                     </div>
                   ) : (
                     <img
-                      src={
-                        event.imageUrls?.length > 0
-                          ? `${baseUrl}${event.imageUrls[0]}`
-                          : 'https://via.placeholder.com/400x300'
-                      }
+                      src={(event.imageUrls && event.imageUrls.length > 0) ? `${process.env.REACT_APP_STATIC_ASSET_URL}
+     ${event.imageUrls[0]}` : 'https://via.placeholder.com/400x300'}
                       alt={event.name}
                       className="w-full h-40 object-cover bg-card-light dark:bg-card-dark rounded-t-lg"
                       onError={(e) => (e.target.src = 'https://via.placeholder.com/400x300')}
