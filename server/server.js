@@ -9,7 +9,7 @@ const app = express();
 
 // CORS ayarı (Vercel domainini .env içine ekle)
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*', // Örn: https://senin-frontend.vercel.app
+  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
   credentials: true
 }));
 
