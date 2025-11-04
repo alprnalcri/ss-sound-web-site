@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,32 +10,25 @@ const AdminDashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     if (!user || !user.token) {
       setLoading(false);
       return;
     }
     try {
-      const response = await fetch('http://localhost:5001/api/events', {
-        headers: {
-          'Authorization': `Bearer ${user.token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Etkinlikler çekilemedi');
-      }
-      const data = await response.json();
+      const response = await api.get('/events');
+      const data = response.data;
       setEvents(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchEvents();
-  }, [user]);
+  }, [user, fetchEvents]);
 
   const handleLogout = () => {
     logout();
@@ -44,17 +38,7 @@ const AdminDashboardPage = () => {
   const handleDeleteEvent = async (eventId) => {
     if (window.confirm('Bu etkinliği silmek istediğinizden emin misiniz?')) {
       try {
-        const response = await fetch(`http://localhost:5001/api/events/${eventId}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${user.token}`,
-          },
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Etkinlik silinemedi');
-        }
+        await api.delete(`/events/${eventId}`);
 
         fetchEvents();
       } catch (err) {

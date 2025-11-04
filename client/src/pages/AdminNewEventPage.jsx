@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../services/api';
 import EventForm from '../components/EventForm';
 
 const AdminNewEventPage = () => {
@@ -27,14 +28,14 @@ const AdminNewEventPage = () => {
           },
         });
 
-        uploadResult.urls.forEach(url => {
+        uploadResponse.data.urls.forEach(url => {
           if (url.match(/\.(jpeg|jpg|gif|png|webp|svg|bmp)$/i)) uploadedImageUrls.push(url);
           else if (url.match(/\.(mp4|mov|avi|mkv|webm|ogg)$/i)) uploadedVideoUrls.push(url);
         });
       }
 
       const finalEventData = { ...formData, imageUrls: uploadedImageUrls, videoUrls: uploadedVideoUrls };
-      const eventResponse = await api.post('/events', finalEventData);
+      await api.post('/events', finalEventData);
 
       navigate('/admin/dashboard');
     } catch (err) {

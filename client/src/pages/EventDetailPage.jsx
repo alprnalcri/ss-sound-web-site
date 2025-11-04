@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import api from '../services/api';
 import EventCardCarousel from '../components/EventCardCarousel'; // Yeni import
 
 // Basit ikon komponentleri
@@ -26,7 +27,7 @@ const EventDetailPage = () => {
     const fetchEvent = async () => {
       try {
         setLoading(true);
-        const response = await api.get(`/events/${id}`);
+        const { data } = await api.get(`/events/${id}`);
         setEvent(data);
       } catch (err) {
         setError(err.message);

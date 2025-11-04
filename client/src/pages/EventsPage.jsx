@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
+import api from '../services/api';
 import EventCardCarousel from '../components/EventCardCarousel';
 
 
@@ -17,7 +18,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await api.get('/events');
+        const { data } = await api.get('/events');
         setEvents(data);
       } catch (err) {
         setError(err.message);

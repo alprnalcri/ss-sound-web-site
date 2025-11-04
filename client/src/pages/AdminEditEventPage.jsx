@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import EventForm from '../components/EventForm';
 import Layout from '../components/Layout';
 
+import api from '../services/api';
+
 const AdminEditEventPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ const AdminEditEventPage = () => {
       try {
         setIsFetching(true);
         const response = await api.get(`/events/${id}`);
+        const data = response.data;
         setInitialEventData(data);
       } catch (err) {
         setError(err.message);
@@ -50,7 +53,7 @@ const AdminEditEventPage = () => {
                     'Content-Type': 'multipart/form-data',
                   },
                 });        
-        uploadResult.urls.forEach(url => {
+        uploadResponse.data.urls.forEach(url => {
           if (url.match(/\.(jpeg|jpg|gif|png|webp|svg|bmp)$/i)) newImageUrls.push(url);
           else if (url.match(/\.(mp4|mov|avi|mkv|webm|ogg)$/i)) newVideoUrls.push(url);
         });
@@ -70,7 +73,7 @@ const AdminEditEventPage = () => {
         videoUrls: finalVideoUrls,
       };
 
-      const eventResponse = await api.put(`/events/${id}`, finalEventData);
+      await api.put(`/events/${id}`, finalEventData);
 
       navigate('/admin/dashboard');
     } catch (err) {
