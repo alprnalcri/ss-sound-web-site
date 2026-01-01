@@ -32,10 +32,12 @@ app.get('/', (req, res) => {
 // ✅ Node 22 uyumlu SPA fallback
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  app.get('/*', (req, res) => {
+
+  app.get('/:path(*)', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
   });
 }
+
 
 // === MongoDB ===
 const connectDB = async () => {
