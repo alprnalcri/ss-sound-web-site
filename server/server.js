@@ -6,15 +6,12 @@ const path = require('path');
 
 const app = express();
 
-// ✅ CORS
+// ✅ CORS (preflight dahil)
 app.use(cors({
-  origin: [process.env.CLIENT_URL],
+  origin: process.env.CLIENT_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
-
-// ✅ Preflight
-app.options("*", cors());
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -32,10 +29,10 @@ app.get('/', (req, res) => {
   res.json({ message: '✅ ss Organizasyon API çalışıyor (Render üzerinde).' });
 });
 
-// (İsteğe bağlı – şu an sorun yok)
+// ✅ Node 22 uyumlu SPA fallback
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  app.get(/.*/, (req, res) => {
+  app.get('/*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
   });
 }
