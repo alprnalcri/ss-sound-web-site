@@ -2,14 +2,13 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const mongoose = require('mongoose');
-const path = require('path');
 
 const app = express();
 
-// ✅ CORS (preflight dahil)
+// ✅ CORS
 app.use(cors({
   origin: process.env.CLIENT_URL,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 
@@ -28,16 +27,6 @@ app.use('/api/contact', require('./routes/contact'));
 app.get('/', (req, res) => {
   res.json({ message: '✅ ss Organizasyon API çalışıyor (Render üzerinde).' });
 });
-
-// ✅ Node 22 uyumlu SPA fallback
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-
-  app.get('/:path(*)', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-  });
-}
-
 
 // === MongoDB ===
 const connectDB = async () => {
