@@ -27,7 +27,7 @@ const EventDetailPage = () => {
     const fetchEvent = async () => {
       try {
         setLoading(true);
-        const { data } = await api.get(`/events/${id}`);
+        const { data } = await api.get(`/api/events/${id}`);
         setEvent(data);
       } catch (err) {
         setError(err.message);

@@ -16,7 +16,7 @@ const AdminDashboardPage = () => {
       return;
     }
     try {
-      const response = await api.get('/events');
+      const response = await api.get('/api/events');
       const data = response.data;
       setEvents(data);
     } catch (err) {
@@ -38,7 +38,7 @@ const AdminDashboardPage = () => {
   const handleDeleteEvent = async (eventId) => {
     if (window.confirm('Bu etkinliği silmek istediğinizden emin misiniz?')) {
       try {
-        await api.delete(`/events/${eventId}`);
+        await api.delete(`/api/events/${eventId}`);
 
         fetchEvents();
       } catch (err) {

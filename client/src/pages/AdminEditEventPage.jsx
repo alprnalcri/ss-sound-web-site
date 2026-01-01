@@ -23,7 +23,7 @@ const AdminEditEventPage = () => {
     const fetchEvent = async () => {
       try {
         setIsFetching(true);
-        const response = await api.get(`/events/${id}`);
+        const response = await api.get(`/api/events/${id}`);
         const data = response.data;
         setInitialEventData(data);
       } catch (err) {
@@ -48,7 +48,7 @@ const AdminEditEventPage = () => {
         const mediaFormData = new FormData();
         newMediaFiles.forEach(file => mediaFormData.append('media', file));
 
-        const uploadResponse = await api.post('/upload', mediaFormData, {
+        const uploadResponse = await api.post('/api/upload', mediaFormData, {
                   headers: {
                     'Content-Type': 'multipart/form-data',
                   },
@@ -73,7 +73,7 @@ const AdminEditEventPage = () => {
         videoUrls: finalVideoUrls,
       };
 
-      await api.put(`/events/${id}`, finalEventData);
+      await api.put(`/api/events/${id}`, finalEventData);
 
       navigate('/admin/dashboard');
     } catch (err) {

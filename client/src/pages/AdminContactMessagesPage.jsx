@@ -20,7 +20,7 @@ const AdminContactMessagesPage = () => {
 
     const fetchMessages = async () => {
       try {
-        const res = await api.get('/contact');
+        const res = await api.get('/api/contact');
         setMessages(res.data.data);
       } catch (err) {
         setError('Mesajlar yüklenirken bir hata oluştu.');
@@ -35,7 +35,7 @@ const AdminContactMessagesPage = () => {
 
   const markAsRead = async (id) => {
     try {
-      await api.put(`/contact/${id}/read`);
+      await api.put(`/api/contact/${id}/read`);
       setMessages(messages.map(msg => msg._id === id ? { ...msg, isRead: true } : msg));
       if (selectedMessage && selectedMessage._id === id) {
         setSelectedMessage(prev => ({ ...prev, isRead: true }));
@@ -49,7 +49,7 @@ const AdminContactMessagesPage = () => {
   const deleteMessage = async (id) => {
     if (!window.confirm('Bu mesajı silmek istediğinizden emin misiniz?')) return;
     try {
-      await api.delete(`/contact/${id}`);
+      await api.delete(`/api/contact/${id}`);
       setMessages(messages.filter(msg => msg._id !== id));
       setSelectedMessage(null);
       setIsModalOpen(false);

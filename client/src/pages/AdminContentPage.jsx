@@ -31,9 +31,7 @@ const AdminContentPage = () => {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const response = await api.get('/content', {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        });
+        const response = await api.get('/api/content');
         setContent(response.data);
       } catch (err) {
         setError('İçerik yüklenemedi: ' + (err.response?.data?.message || err.message));
@@ -55,7 +53,7 @@ const AdminContentPage = () => {
       setSaving(true);
       setError('');
       setSuccess('');
-      await api.put('/content', content, { headers: { Authorization: `Bearer ${user?.token}` } });
+      await api.put('/api/content', content);
       setSuccess('İçerik başarıyla güncellendi!');
     } catch (err) {
       setError('Güncelleme başarısız: ' + (err.response?.data?.message || err.message));

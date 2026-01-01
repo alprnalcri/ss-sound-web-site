@@ -1,44 +1,69 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
-const mongoose = require('mongoose');
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 
-// ✅ CORS
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}));
+/* ===============================
+   CORS CONFIG (ÇOK KRİTİK)
+================================ */
+app.use(
+  cors({
+    origin: [
+      "https://www.sssound.com.tr",
+      "https://sssound.com.tr"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
 
+// Preflight (OPTIONS) request fix
+app.options("*", cors());
+
+/* ===============================
+   MIDDLEWARE
+================================ */
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
-// === API Rotaları ===
-app.use('/api/events', require('./routes/events'));
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/upload', require('./routes/upload'));
-app.use('/api/gallery', require('./routes/gallery'));
-app.use('/api/content', require('./routes/content'));
-app.use('/api/contact', require('./routes/contact'));
+/* ===============================
+   API ROUTES
+================================ */
+app.use("/api/events", require("./routes/events"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/upload", require("./routes/upload"));
+app.use("/api/gallery", require("./routes/gallery"));
+app.use("/api/content", require("./routes/content"));
+app.use("/api/contact", require("./routes/contact"));
 
-// === Test rotası ===
-app.get('/', (req, res) => {
-  res.json({ message: '✅ ss Organizasyon API çalışıyor (Render üzerinde).' });
+/* ===============================
+   TEST ROUTE
+================================ */
+app.get("/", (req, res) => {
+  res.json({
+    message: "✅ SS Sound API çalışıyor (Render)",
+  });
 });
 
-// === MongoDB ===
+/* ===============================
+   MONGODB CONNECTION
+================================ */
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ MongoDB bağlantısı başarılı!');
-  } catch (error) {
-    console.error('❌ MongoDB bağlantı hatası:', error.message);
+    console.log("✅ MongoDB bağlantısı başarılı");
+  } catch (err) {
+    console.error("❌ MongoDB bağlantı hatası:", err.message);
     process.exit(1);
   }
 };
 
+/* ===============================
+   SERVER START
+================================ */
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {

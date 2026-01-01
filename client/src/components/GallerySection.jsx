@@ -25,7 +25,7 @@ const GallerySection = () => {
     const fetchImages = async () => {
       try {
         setLoadingImages(true);
-        const response = await api.get('/gallery');
+        const response = await api.get('/api/gallery');
         setImages(response.data);
       } catch (error) {
         console.error("Galeri resimleri çekilemedi:", error);

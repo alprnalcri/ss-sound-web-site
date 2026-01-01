@@ -17,7 +17,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const { data } = await api.get('/events');
+        const { data } = await api.get('/api/events');
         setEvents(data);
       } catch (err) {
         console.error('Etkinlikleri çekerken hata:', err);

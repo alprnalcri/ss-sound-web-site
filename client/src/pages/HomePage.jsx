@@ -25,7 +25,7 @@ const HomePage = () => {
     const fetchRecentEvents = async () => {
       try {
         setLoadingEvents(true);
-        const response = await api.get('/events');
+        const response = await api.get('/api/events');
         const data = response.data || [];
         const sortedEvents = data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setRecentEvents(sortedEvents.slice(0, 3));

@@ -13,7 +13,7 @@ export const ContentProvider = ({ children }) => {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const response = await api.get('/content');
+        const response = await api.get('/api/content');
         if (response.data) {
           setContent(response.data);
         }

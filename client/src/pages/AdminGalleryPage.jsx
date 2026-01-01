@@ -15,7 +15,7 @@ const AdminGalleryPage = () => {
   const fetchImages = async () => {
     try {
       setIsFetching(true);
-      const response = await api.get('/gallery');
+      const response = await api.get('/api/gallery');
       setImages(response.data);
       setError('');
     } catch (err) {
@@ -48,14 +48,14 @@ const AdminGalleryPage = () => {
       setError('');
       setSuccess('');
 
-      const uploadResponse = await api.post('/upload', formData, {
+      const uploadResponse = await api.post('/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       const { urls } = uploadResponse.data;
       if (!urls || urls.length === 0) throw new Error('Dosyalar yüklendi ancak resim URL\'leri alınamadı.');
 
-      await api.post('/gallery', { imageUrls: urls, caption });
+      await api.post('/api/gallery', { imageUrls: urls, caption });
 
       setSuccess(`${urls.length} resim başarıyla yüklendi!`);
       setSelectedFiles([]);
@@ -74,7 +74,7 @@ const AdminGalleryPage = () => {
       try {
         setError('');
         setSuccess('');
-        await api.delete(`/gallery/${id}`);
+        await api.delete(`/api/gallery/${id}`);
         setSuccess('Resim başarıyla silindi.');
         fetchImages();
       } catch (err) {
